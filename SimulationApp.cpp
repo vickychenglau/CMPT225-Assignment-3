@@ -4,7 +4,7 @@
  * Class Description: Simulates a line up with one teller.
  *					  Calculates the average wait time for each customer.
  *
- * Last modified on: June 23, 2017
+ * Last modified on: June 24, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -23,20 +23,20 @@ int main(void){
 
 	string aLine;
 
-	Customer *newEvent          = NULL;
-
-	unsigned int time 	  		= 0;
-	unsigned int length   		= 0;
-	unsigned int departureTime  = 0;
-	unsigned int currentTime    = 0;
-	unsigned int totalWaitTime  = 0;
-	unsigned int numOfCustomers = 0;
-
-	bool tellerAvailable = true;
-
 	Queue<Customer> *bankLine = new Queue<Customer>();
 
 	PriorityQueue<Customer> *eventPriorityQueue = new PriorityQueue<Customer>();
+
+	Customer *newEvent = NULL;
+
+	unsigned int time 	  		 = 0;
+	unsigned int length   		 = 0;
+	unsigned int departureTime   = 0;
+	unsigned int currentTime     = 0;
+	unsigned int numOfCustomers  = 0;
+	unsigned int averageWaitTime = 0;
+
+	bool tellerAvailable = true;
 
 
 	cout << "Simulation Begins" << endl;
@@ -120,7 +120,7 @@ int main(void){
 	cout << "Final Statistics:" << endl;
 	cout << "	Total number of people processed: " << numOfCustomers << endl;
 	cout << "	Average amount of time spent waiting: " 
-		 << totalWaitTime/numOfCustomers << endl;
+		 << averageWaitTime << endl;
 
 	return(0);
 }
