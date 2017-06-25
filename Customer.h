@@ -5,7 +5,7 @@
  *					  of the customers, as well as their length of stay
  * Class Invariant:
  *
- * Last modified on: June 23, 2017
+ * Last modified on: June 24, 2017
  * Author: Jacky Tse, Vicky Lau
  */
  
@@ -56,8 +56,12 @@ public:
 	//				"rhs" Customer object.
 	//				Returns true if time of "this" Customer object is > than
 	//				the time of "rhs" Customer object.
-	bool operator>(const Customer & rhs);
+	bool operator>=(const Customer & rhs);
 
+	bool operator<=(const Customer & rhs);
+
+	// Description: Prints the content of "this".
+	friend ostream & operator<<(ostream & os, const Customer & p);
 }; 
 
 // end Customer.h
