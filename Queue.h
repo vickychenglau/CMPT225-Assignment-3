@@ -4,7 +4,7 @@
  * Class Description: A Linked List implimentation of a FIFO/LILO queue
  * Class Invariant:           
  *
- * Last modified on: June 23, 2017
+ * Last modified on: June 24, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include "Node.h"
+#include "Customer.h"
 #include "EmptyDataCollectionException.h"
 
 using namespace std; // Needed for cout, cin to be recognized
@@ -140,8 +141,20 @@ bool Queue<ElementType>::enqueue(const ElementType& newElement){
 // Time Efficiency: O(1)
 template <class ElementType>
 bool Queue<ElementType>::dequeue(){
+   if(isEmpty()){
+      throw EmptyDataCollectionException("dequeue() called with empty queue.");
+   }
+
    Node<ElementType>* current = head;
-   head = head->next;
+
+   if(head == tail){
+      head = NULL;
+      tail = NULL;
+   }
+   else{
+      head = head->next;
+   }
+
    delete current;
 
    elementCount--;
@@ -156,7 +169,7 @@ bool Queue<ElementType>::dequeue(){
 // Time Efficiency: O(1)
 template <class ElementType>
 ElementType Queue<ElementType>::peek() const throw(EmptyDataCollectionException){
-   if (isEmpty()){
+   if(isEmpty()){
       throw EmptyDataCollectionException("peek() called with empty queue.");
    }
 
@@ -167,7 +180,7 @@ void Queue<ElementType>::printQueue(){
    Node<ElementType>* current = head;
 
    while(current != NULL){
-      cout << current->data << ", ";
+      cout << current->data;
       current = current->next;
    }
 }
@@ -175,4 +188,3 @@ void Queue<ElementType>::printQueue(){
 // End of Queue Implementation
 
 // End of Queue.h
-
