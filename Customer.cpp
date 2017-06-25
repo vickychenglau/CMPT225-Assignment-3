@@ -5,10 +5,11 @@
  *					  of the customers, as well as their length of stay
  * Class Invariant:
  *
- * Last modified on: June 23, 2017
+ * Last modified on: June 24, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
+#include <iostream>
 #include <string>
 #include "Customer.h"
 
@@ -59,13 +60,12 @@ unsigned int Customer::getLength() const{
 
 // Description: Comparison operator. Compares "this" Customer object with
 //				"rhs" Customer object.
-//				Returns true if time of "this" Customer object is > than
-//				the time of "rhs" Customer object.
+//				Returns true time and type are the same
 bool Customer::operator==(const Customer & rhs){
 	string rhsType = rhs.getType();
 	unsigned int rhsTime = rhs.getTime();
 
-	if(this->type == rhsType && this->time == rhsTime){
+	if(type == rhsType && time == rhsTime){
 		return(true);
 	}
 
@@ -74,27 +74,42 @@ bool Customer::operator==(const Customer & rhs){
 
 // Description: Comparison operator. Compares "this" Customer object with
 //				"rhs" Customer object.
-//				Returns true if "this" has type A and "rhs" has type D
+//				Lower time has more priority. Type "A" has more priority.
 //				If type is "None", then it is less than the other
-bool Customer::operator>(const Customer & rhs){
+bool Customer::operator>=(const Customer & rhs){
 	string rhsType = rhs.getType();
 	unsigned int rhsTime = rhs.getTime();
 
-	if(this->type == "A" && rhsType == "D"){
+	if(time < rhsTime){
 		return(true);
 	}
-	else if(this->type == rhsType && this->time < rhsTime){
+	else if(time == rhsTime && type == "A" && rhsType == "D"){
 		return(true);
 	}
-	else if(rhs.getType() == "None"){
+
+	return(false);
+}
+
+bool Customer::operator<=(const Customer & rhs){
+	string rhsType = rhs.getType();
+	unsigned int rhsTime = rhs.getTime();
+
+	if(time > rhsTime){
+		return(true);
+	}
+	else if(time == rhsTime && type == "D" && rhsType == "A"){
 		return(true);
 	}
 
 	return(false);
 }
 	
+// Description: Prints the content of "this".
+ostream & operator<<(ostream &os, const Customer &p) {
+	os << "Type: " << p.getType() << ",	Time: " << p.getTime() <<
+		  ",	Length: " << p.getLength() << endl;
 
-	
-
+	return os;
+}	
 
 // End of Customer.cpp
