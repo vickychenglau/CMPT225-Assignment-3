@@ -3,9 +3,10 @@
  * 
  * Class Description: A Linked List implimentation of a FIFO/LILO 
  *                    priority queue
- * Class Invariant:           
+ * Class Invariant: Elements stored are always sorted with higher priority elements
+ *                  in the front
  *
- * Last modified on: June 23, 2017
+ * Last modified on: June 24, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -15,6 +16,7 @@
 #include <string>
 #include <iostream>
 #include "Node.h"
+#include "Customer.h"
 #include "EmptyDataCollectionException.h"
 
 using namespace std; // Needed for cout, cin to be recognized
@@ -121,7 +123,7 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
       head = newNode;
       tail = newNode;
    }
-   else if(newNode >= head){  // Higher priority goes in front
+   else if(newNode->data >= head->data){  // Higher priority goes in front
       newNode->next = head;
       head = newNode;
    }
@@ -129,10 +131,12 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
       Node<ElementType> *current = head;
       bool inserted = false;
 
-      while(current != tail){
-         if(newNode <= current && newNode >= current->next){
+      while(current != tail && !inserted){
+         if(newNode->data <= current->data && newNode->data >= current->next->data){
+
             newNode->next = current->next;
             current->next = newNode;
+
             inserted = true;
          }
          else{
@@ -140,7 +144,7 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
          }
       }
 
-      if(inserted == false){
+      if(!inserted){
          tail->next = newNode;
          tail = newNode;
       }
@@ -157,8 +161,20 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
 // Time Efficiency: O(1) 
 template <class ElementType>
 bool PriorityQueue<ElementType>::dequeue(){
+   if(isEmpty()){
+      throw EmptyDataCollectionException("dequeue() called with empty priority queue.");
+   }
+
    Node<ElementType>* current = head;
-   head = head->next;
+
+   if(head == tail){
+      head = NULL;
+      tail = NULL;
+   }
+   else{
+      head = head->next;
+   }
+
    delete current;
 
    elementCount--;
@@ -173,7 +189,7 @@ bool PriorityQueue<ElementType>::dequeue(){
 // Time Efficiency: O(1) 
 template <class ElementType>
 ElementType PriorityQueue<ElementType>::peek() const throw(EmptyDataCollectionException){
-   if (isEmpty()){
+   if(isEmpty()){
       throw EmptyDataCollectionException("peek() called with empty priority queue.");
    }
 
@@ -185,7 +201,7 @@ void PriorityQueue<ElementType>::printPriorityQueue(){
    Node<ElementType>* current = head;
 
    while(current != NULL){
-      cout << current->data << ", ";
+      cout << current->data;
       current = current->next;
    }
 }
