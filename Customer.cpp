@@ -1,11 +1,12 @@
 /*
  * Customer.cpp - Implementation of Customer class
  * 
- * Class Description: Contains information about the arrival/departure time
- *					  of the customers, as well as their length of stay
- * Class Invariant:
+ * Class Description: Contains information about the type of customer event (is it Arrival or Depature),
+ *					  If Arrival Event, then has the time of the arrival and length of transaction
+ *					  If Departure Event, then has the time of the departure.
+ * Class Invariant: Type is always A, D, or None. Time and Length is always greater than 0.
  *
- * Last modified on: June 24, 2017
+ * Last modified on: June 26, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -58,9 +59,23 @@ unsigned int Customer::getLength() const{
 	return(length);
 }
 
-// Description: Comparison operator. Compares "this" Customer object with
-//				"rhs" Customer object.
-//				Returns true time and type are the same
+// Description: Sets type to theType
+void Customer::setType(string theType){
+	type = theType;
+}
+
+// Description: Sets time to theTime
+void Customer::setTime(unsigned int theTime){
+	time = theTime;
+}
+
+// Description: Sets length to theLength
+void Customer::setLength(unsigned int theLength){
+	length = theLength;
+}
+
+// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+//				Returns true if time of "this" Customer object is the same as the time of "rhs" Customer object.
 bool Customer::operator==(const Customer & rhs){
 	string rhsType = rhs.getType();
 	unsigned int rhsTime = rhs.getTime();
@@ -72,11 +87,9 @@ bool Customer::operator==(const Customer & rhs){
 	return(false);
 }
 
-// Description: Comparison operator. Compares "this" Customer object with
-//				"rhs" Customer object.
-//				Lower time has more priority. Type "A" has more priority.
-//				If type is "None", then it is less than the other
-bool Customer::operator>=(const Customer & rhs){
+// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+//				Returns true if time of "this" Customer object is > than the time of "rhs" Customer object.
+bool Customer::operator>(const Customer & rhs){
 	string rhsType = rhs.getType();
 	unsigned int rhsTime = rhs.getTime();
 
@@ -90,7 +103,9 @@ bool Customer::operator>=(const Customer & rhs){
 	return(false);
 }
 
-bool Customer::operator<=(const Customer & rhs){
+// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+//				Returns true if time of "this" Customer object is < than the time of "rhs" Customer object.
+bool Customer::operator<(const Customer & rhs){
 	string rhsType = rhs.getType();
 	unsigned int rhsTime = rhs.getTime();
 
@@ -103,6 +118,45 @@ bool Customer::operator<=(const Customer & rhs){
 
 	return(false);
 }
+
+// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+//				Returns true if time of "this" Customer object is >= than the time of "rhs" Customer object.
+bool Customer::operator>=(const Customer & rhs){
+	string rhsType = rhs.getType();
+	unsigned int rhsTime = rhs.getTime();
+
+	if(time < rhsTime){
+		return(true);
+	}
+	else if(time == rhsTime && type == "A" && rhsType == "D"){
+		return(true);
+	}
+	else if(type == rhsType && time == rhsTime){
+		return(true);
+	}
+
+	return(false);
+}
+
+// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+//				Returns true if time of "this" Customer object is <= than the time of "rhs" Customer object.
+bool Customer::operator<=(const Customer & rhs){
+	string rhsType = rhs.getType();
+	unsigned int rhsTime = rhs.getTime();
+
+	if(time > rhsTime){
+		return(true);
+	}
+	else if(time == rhsTime && type == "D" && rhsType == "A"){
+		return(true);
+	}
+	else if(type == rhsType && time == rhsTime){
+		return(true);
+	}
+
+	return(false);
+}
+
 	
 // Description: Prints the content of "this".
 ostream & operator<<(ostream &os, const Customer &p) {
