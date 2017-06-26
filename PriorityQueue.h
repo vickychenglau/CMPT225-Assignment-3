@@ -1,12 +1,11 @@
 /*
  * PriorityQueue.h - Header of PriorityQueue class
  * 
- * Class Description: A Linked List implimentation of a FIFO/LILO 
- *                    priority queue
+ * Class Description: A Linked List implimentation of a FIFO/LILO priority queue
  * Class Invariant: Elements stored are always sorted with higher priority elements
- *                  in the front
+ *                  in the front where the front is the head.
  *
- * Last modified on: June 24, 2017
+ * Last modified on: June 26, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -89,6 +88,19 @@ PriorityQueue<ElementType>::PriorityQueue(){
    elementCount = 0;
    head = NULL;
    tail = NULL;
+}
+
+//Deconstructor
+template <class ElementType>
+PriorityQueue<ElementType>::~PriorityQueue(){
+   Node<ElementType> *previous = head;
+   Node<ElementType> *current = head;
+
+   while(current != NULL){
+      previous = current;
+      current = current->next;
+      delete previous;
+   }
 }
         
 // Description: Returns the number of elements in the Priority Queue.
