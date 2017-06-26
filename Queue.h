@@ -2,9 +2,9 @@
  * Queue.h - Header and Implementation of Queue class
  * 
  * Class Description: A Linked List implimentation of a FIFO/LILO queue
- * Class Invariant:           
+ * Class Invariant: 
  *
- * Last modified on: June 24, 2017
+ * Last modified on: June 26, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -93,6 +93,19 @@ Queue<ElementType>::Queue(){
    tail = NULL;
 }
 
+//Deconstructor
+template <class ElementType>
+Queue<ElementType>::~Queue(){
+   Node<ElementType> *previous = head;
+   Node<ElementType> *current = head;
+
+   while(current != NULL){
+      previous = current;
+      current = current->next;
+      delete previous;
+   }
+}
+
 // Description: Returns the number of elements in the Queue.
 // (This method eases testing.)
 // Time Efficiency: O(1)
@@ -177,7 +190,7 @@ ElementType Queue<ElementType>::peek() const throw(EmptyDataCollectionException)
 }
 template <class ElementType>
 void Queue<ElementType>::printQueue(){
-   Node<ElementType>* current = head;
+   Node<ElementType> *current = head;
 
    while(current != NULL){
       cout << current->data;
