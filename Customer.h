@@ -1,11 +1,12 @@
 /*
  * Customer.h - Header of Customer class
  * 
- * Class Description: Contains information about the arrival/departure time
- *					  of the customers, as well as their length of stay
- * Class Invariant:
+* Class Description: Contains information about the type of customer event (is it Arrival or Depature),
+ *					  If Arrival Event, then has the time of the arrival and length of transaction
+ *					  If Departure Event, then has the time of the departure.
+ * Class Invariant: Type is always A, D, or None. Time and Length is always greater than 0.
  *
- * Last modified on: June 24, 2017
+ * Last modified on: June 26, 2017
  * Author: Jacky Tse, Vicky Lau
  */
  
@@ -46,18 +47,33 @@ public:
 	// Description: Returns the Length
 	unsigned int getLength() const;
 
-	// Description: Comparison operator. Compares "this" Customer object with
-	//				"rhs" Customer object.
-	//				Returns true if time of "this" Customer object is the
-	//				same as the time of "rhs" Customer object.
+	// Description: Sets type to theType
+	void setType(string theType);
+
+	// Description: Sets time to theTime
+	void setTime(unsigned int theTime);
+
+	// Description: Sets length to theLength
+	void setLength(unsigned int theLength);
+
+	// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+	//				Returns true if time of "this" Customer object is the same as the time of "rhs" Customer object.
 	bool operator==(const Customer & rhs);
 
-	// Description: Comparison operator. Compares "this" Customer object with
-	//				"rhs" Customer object.
-	//				Returns true if time of "this" Customer object is > than
-	//				the time of "rhs" Customer object.
+	// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+	//				Returns true if time of "this" Customer object is > than the time of "rhs" Customer object.
+	bool operator>(const Customer & rhs);
+
+	// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+	//				Returns true if time of "this" Customer object is < than the time of "rhs" Customer object.
+	bool operator<(const Customer & rhs);
+
+	// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+	//				Returns true if time of "this" Customer object is >= than the time of "rhs" Customer object.
 	bool operator>=(const Customer & rhs);
 
+	// Description: Comparison operator. Compares "this" Customer object with "rhs" Customer object.
+	//				Returns true if time of "this" Customer object is <= than the time of "rhs" Customer object.
 	bool operator<=(const Customer & rhs);
 
 	// Description: Prints the content of "this".
