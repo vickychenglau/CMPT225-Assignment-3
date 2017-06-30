@@ -42,7 +42,8 @@ Customer::Customer(string theType,
 	}
 
 	time   = theTime;
-	if(type == D){
+	
+	if(type == "D"){
 		length = 0;
 	}
 	else{
