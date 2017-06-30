@@ -2,7 +2,7 @@
  * Queue.h - Header and Implementation of Queue class
  * 
  * Class Description: A Linked List implimentation of a FIFO/LILO queue
- * Class Invariant: 
+ * Class Invariant: FIFO/LILO
  *
  * Last modified on: June 30, 2017
  * Author: Jacky Tse, Vicky Lau
