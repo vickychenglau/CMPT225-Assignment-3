@@ -175,6 +175,7 @@ template <class ElementType>
 bool PriorityQueue<ElementType>::dequeue(){
    if(isEmpty()){
       throw EmptyDataCollectionException("dequeue() called with empty priority queue.");
+      return(false);
    }
 
    Node<ElementType>* current = head;
@@ -188,6 +189,7 @@ bool PriorityQueue<ElementType>::dequeue(){
    }
 
    delete current;
+   //cout << "Deleted in PQ" << endl;
 
    elementCount--;
 
