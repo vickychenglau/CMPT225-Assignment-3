@@ -156,6 +156,7 @@ template <class ElementType>
 bool Queue<ElementType>::dequeue(){
    if(isEmpty()){
       throw EmptyDataCollectionException("dequeue() called with empty queue.");
+      return(false);
    }
 
    Node<ElementType>* current = head;
@@ -169,6 +170,7 @@ bool Queue<ElementType>::dequeue(){
    }
 
    delete current;
+   //cout << "Deleted in Q" << endl;
 
    elementCount--;
 
