@@ -4,6 +4,7 @@
  * Class Description: A Linked List implimentation of a FIFO/LILO priority queue
  * Class Invariant: Elements stored are always sorted with higher priority elements
  *                  in the front with the head as the front.
+ *                  FIFO/LILO
  *
  * Last modified on: June 30, 2017
  * Author: Jacky Tse, Vicky Lau
