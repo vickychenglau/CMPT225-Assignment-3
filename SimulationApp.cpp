@@ -10,6 +10,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include "Customer.h"
 #include "Queue.h"
@@ -34,12 +35,26 @@ int main(void){
 	unsigned int departureTime   = 0;
 	unsigned int currentTime     = 0;
 	unsigned int numOfCustomers  = 0;
-	unsigned int averageWaitTime = 0;
+
+	float totalWaitTime = 0.0;
+	float averageWaitTime = 0.0;
 
 	bool tellerAvailable = true;
 
 
 	cout << "Simulation Begins" << endl;
+
+/******************************************************
+	try{
+		cout << "Peeking before enqueuing:" << endl;
+		*newEvent = eventPriorityQueue->peek();
+		((cout << "Now, let's have a look at the peeked Customer:")<< newEvent )<< endl;  
+		}catch(EmptyDataCollectionException&anException){
+		cout << "peeking() unsuccessful because " << anException.what() << endl;
+		// Place recovery code here!
+		}
+
+******************************************************/
 
 	// Create and add arrival events to event queue
 	while(getline(cin >> ws, aLine)){   // while (there is data)
@@ -56,17 +71,31 @@ int main(void){
       	numOfCustomers++;
     }
 
+/**************************************************
+    try{
+		cout << "Peeking before Processing events:" << endl;
+		*newEvent = eventPriorityQueue->peek();
+		((cout << "Now, let's have a look at the peeked Customer:")<< newEvent )<< endl;  
+		}catch(EmptyDataCollectionException&anException){
+		cout << "peeking() unsuccessful because " << anException.what() << endl;
+		// Place recovery code here!
+		}
+**************************************************/
+
     // Event loop
     while(!eventPriorityQueue->isEmpty()){
-      	*newEvent = eventPriorityQueue->peek();
+    	try{
+      		*newEvent = eventPriorityQueue->peek();
+      	}catch(EmptyDataCollectionException&anException){
+			cout << "peeking() unsuccessful because " << anException.what() << endl;
+		}
 
       	// Calculates current time
       	currentTime = newEvent->getTime();
 
       	// Process an Arrival Event
       	if(newEvent->getType() == "A"){
-      		cout << "Processing an arrival event at time:	"
-	      		 << currentTime << endl;
+      		cout << "Processing an arrival event at time:   " << setw(2) << right << currentTime << endl;
 
       		eventPriorityQueue->dequeue();
 
@@ -91,14 +120,19 @@ int main(void){
 		}
 		// Process a Departure Event
       	else{
-      		cout << "Processing a departure event at time:	"
-      			 << currentTime << endl;
+      		cout << "Processing a departure event at time:  " << setw(2) << right << currentTime << endl;
 
       		eventPriorityQueue->dequeue();
 
       		if(!bankLine->isEmpty()){
       			// Customer at front of line begins transaction
-      			*newEvent = bankLine->peek();
+      			try{
+      				*newEvent = bankLine->peek();
+      			}catch(EmptyDataCollectionException&anException){
+					cout << "peeking() unsuccessful because " << anException.what() << endl;
+				}
+
+      			totalWaitTime += (currentTime - newEvent->getTime());
 
       			bankLine->dequeue();
 
@@ -114,6 +148,8 @@ int main(void){
       		}
       	}
     }
+
+    averageWaitTime = totalWaitTime/numOfCustomers;
 
 	cout << "Simulation Ends" << endl << endl;
 
