@@ -3,9 +3,9 @@
  * 
  * Class Description: A Linked List implimentation of a FIFO/LILO priority queue
  * Class Invariant: Elements stored are always sorted with higher priority elements
- *                  in the front where the front is the head.
+ *                  in the front with the head as the front.
  *
- * Last modified on: June 26, 2017
+ * Last modified on: June 30, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -69,7 +69,7 @@ public:
    // Time Efficiency: O(1) 
    ElementType peek() const throw(EmptyDataCollectionException);
 
-   // Description: Prints all the data in priority queue.
+   // Description: Prints all the data in priority queue in order.
    void printPriorityQueue();
    
 /******* Public Interface - END - *******/
@@ -146,6 +146,7 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
       while(current != tail && !inserted){
          if(newNode->data <= current->data && newNode->data >= current->next->data){
 
+            // inserts newNode in between two nodes
             newNode->next = current->next;
             current->next = newNode;
 
@@ -174,7 +175,6 @@ bool PriorityQueue<ElementType>::enqueue(const ElementType& newElement){
 template <class ElementType>
 bool PriorityQueue<ElementType>::dequeue(){
    if(isEmpty()){
-      throw EmptyDataCollectionException("dequeue() called with empty priority queue.");
       return(false);
    }
 
@@ -189,7 +189,6 @@ bool PriorityQueue<ElementType>::dequeue(){
    }
 
    delete current;
-   //cout << "Deleted in PQ" << endl;
 
    elementCount--;
 
@@ -210,6 +209,7 @@ ElementType PriorityQueue<ElementType>::peek() const throw(EmptyDataCollectionEx
    return(head->data);
 }
 
+// Description: Prints all the data in priority queue in order.
 template <class ElementType>
 void PriorityQueue<ElementType>::printPriorityQueue(){
    Node<ElementType>* current = head;
