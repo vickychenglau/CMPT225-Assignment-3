@@ -4,7 +4,7 @@
  * Class Description: A Linked List implimentation of a FIFO/LILO queue
  * Class Invariant: 
  *
- * Last modified on: June 26, 2017
+ * Last modified on: June 30, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -24,9 +24,9 @@ template <class ElementType>
 class Queue {
 
 private:
-	int elementCount;
-	Node<ElementType>* head;
-	Node<ElementType>* tail;
+   int elementCount;
+   Node<ElementType>* head;
+   Node<ElementType>* tail;
 
 // We must complete this section.
 
@@ -34,9 +34,9 @@ public:
 
 // Let's put our constructor(s) and destructor (if any) ***here***.
 
-	Queue();
+   Queue();
 
-	~Queue();
+   ~Queue();
 
 /******* Public Interface - START - *******/
         
@@ -155,7 +155,6 @@ bool Queue<ElementType>::enqueue(const ElementType& newElement){
 template <class ElementType>
 bool Queue<ElementType>::dequeue(){
    if(isEmpty()){
-      throw EmptyDataCollectionException("dequeue() called with empty queue.");
       return(false);
    }
 
@@ -170,7 +169,6 @@ bool Queue<ElementType>::dequeue(){
    }
 
    delete current;
-   //cout << "Deleted in Q" << endl;
 
    elementCount--;
 
@@ -190,6 +188,8 @@ ElementType Queue<ElementType>::peek() const throw(EmptyDataCollectionException)
 
    return(head->data);
 }
+
+// Prints all the data in queue.
 template <class ElementType>
 void Queue<ElementType>::printQueue(){
    Node<ElementType> *current = head;
