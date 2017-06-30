@@ -3,10 +3,10 @@
  * 
  * Class Description: Contains information about the type of customer event (is it Arrival or Depature),
  *					  If Arrival Event, then has the time of the arrival and length of transaction
- *					  If Departure Event, then has the time of the departure.
- * Class Invariant: Type is always A, D, or None. Time and Length is always greater than 0.
+ *					  If Departure Event, then has the time of the departure and length set to 0
+ * Class Invariant: Type is always A, D, or None. Time and Length is always >= 0.
  *
- * Last modified on: June 26, 2017
+ * Last modified on: June 30, 2017
  * Author: Jacky Tse, Vicky Lau
  */
 
@@ -29,7 +29,8 @@ Customer::Customer(){
 // Parameterized Constructor
 // Description: Created a customer with the indicated parameters
 // Postcondition: If type is not A or D, set to "None"
-//				  Time is set to theTime and length is set to theLength
+//				  Time is set to theTime
+//				  Length is set to theLength unless type is D, in which length = 0.
 Customer::Customer(string theType, 
 				   unsigned int theTime,
 				   unsigned int theLength){
@@ -41,7 +42,12 @@ Customer::Customer(string theType,
 	}
 
 	time   = theTime;
-	length = theLength;
+	if(type == D){
+		length = 0;
+	}
+	else{
+		length = theLength;
+	}
 }
 
 // Description: Returns the type
